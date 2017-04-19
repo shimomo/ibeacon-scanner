@@ -8,14 +8,14 @@ import (
 	"github.com/paypal/gatt/examples/option"
 )
 
-func Scan(discover func(string, string, string), sleep int) {
+func Scan(discover func(string, string, string, int), sleep int) {
 	onPeriphDiscovered := func(p gatt.Peripheral, a *gatt.Advertisement, rssi int) {
 		if len(a.ManufacturerData) == 0 {
 			return
 		}
 
 		if isIbeacon(a) {
-			discover(getUuid(a), getMajor(a), getMinor(a))
+			discover(getUuid(a), getMajor(a), getMinor(a), rssi)
 		}
 	}
 
